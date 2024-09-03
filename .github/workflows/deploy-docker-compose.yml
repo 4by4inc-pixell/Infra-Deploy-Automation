@@ -5,7 +5,7 @@ on:
   push:
     paths:
       - 'docker-compose.yml'
-      - '.github/workflows/deploy-docker-compose.yml'
+      - '.github/workflows/deploy-docker-compose.yaml'
   workflow_dispatch:
 
 jobs:
