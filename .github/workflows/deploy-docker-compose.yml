@@ -4,8 +4,8 @@ name: Deploy Docker Compose
 on:
   push:
     paths:
-      - 'docker-compose.yml'
-      - '.github/workflows/deploy-docker-compose.yaml'
+      - 'docker-compose.yaml'
+      - '.github/workflows/deploy-docker-compose.yml'
   workflow_dispatch:
 
 jobs:
