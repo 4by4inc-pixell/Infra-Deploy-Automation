@@ -1,0 +1,26 @@
+
+name: Deploy Docker Compose
+
+on:
+  push:
+    paths:
+      - 'docker-compose.yml'
+      - '.github/workflows/deploy-docker-compose.yml'
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: [self-hosted, base]
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Create .env file from secrets
+      run: |
+        echo "${{ secrets.ENV_VARS }}" > .env
+
+    - name: Deploy Docker Compose
+      run: |
+        docker-compose down
+        docker-compose up -d
