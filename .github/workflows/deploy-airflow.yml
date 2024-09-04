@@ -7,7 +7,9 @@ on:
       - 'airflow/docker-compose.yaml'
       - '.github/workflows/deploy-airflow.yml'
   workflow_dispatch:
-
+env: 
+  - COMPOSE_PATH: airflow/docker-compose.yaml
+  - ENV_PATH: airflow/.env
 jobs:
   deploy:
     runs-on: [self-hosted, base]
@@ -18,14 +20,14 @@ jobs:
 
     - name: Create .env file from secrets
       run: |
-        echo "${{ vars.AIRFLOW_IMAGE_NAME }}" > airflow/.env
-        echo "${{ vars.AIRFLOW_PIP_REQUIREMENTS }}" >> airflow/.env
-        echo "${{ vars.AIRFLOW_PROJ_DIR }}" >> airflow/.env
-        echo "${{ vars.AIRFLOW_UID }}" >> airflow/.env
-        echo "${{ vars.AIRFLOW_USER_PASSWORD }}" >> airflow/.env
-        echo "${{ vars.AIRFLOW_USER_USERNAME }}" >> airflow/.env
+        echo "${{ vars.AIRFLOW_IMAGE_NAME }}" > ${{ env.ENV_PATH }}
+        echo "${{ vars.AIRFLOW_PIP_REQUIREMENTS }}" >> ${{ env.ENV_PATH }}
+        echo "${{ vars.AIRFLOW_PROJ_DIR }}" >> ${{ env.ENV_PATH }}
+        echo "${{ vars.AIRFLOW_UID }}" >> ${{ env.ENV_PATH }}
+        echo "${{ vars.AIRFLOW_USER_PASSWORD }}" >> ${{ env.ENV_PATH }}
+        echo "${{ vars.AIRFLOW_USER_USERNAME }}" >> ${{ env.ENV_PATH }}
 
     - name: Deploy Docker Compose
       run: |
-        docker compose down
-        docker compose --file=airflow/docker-compose.yaml --env-file=airflow/.env up -d
+        docker compose -f ${{ env.COMPOSE_PATH }} down
+        docker compose -f ${{ env.COMPOSE_PATH }} --env-file=${{ env.ENV_PATH }} up -d
