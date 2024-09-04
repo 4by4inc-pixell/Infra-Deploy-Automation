@@ -1,0 +1,12 @@
+services:
+  postgres:
+    image: postgres:13      # You can change the version of PostgreSQL if necessary
+    container_name: postgres_db
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}       # Name of the database
+      POSTGRES_USER: ${POSTGRES_USER}         # Username for the database
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD} # Password for the user
+    ports:
+      - "${POSTGRES_PORT}:5432"   # Host port 5432 mapped to container port 5432
+    volumes:
+      - ${POSTGRES_PROJ_DIR}:/var/lib/postgresql/data   # Volume for data persistence

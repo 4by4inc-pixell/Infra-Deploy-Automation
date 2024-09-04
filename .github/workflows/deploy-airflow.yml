@@ -1,5 +1,5 @@
 
-name: Deploy Docker Compose
+name: Deploy Docker Compose[airflow]
 
 on:
   push:
@@ -20,12 +20,13 @@ jobs:
 
     - name: Create .env file from secrets
       run: |
-        echo "${{ vars.AIRFLOW_IMAGE_NAME }}" > ${{ env.ENV_PATH }}
-        echo "${{ vars.AIRFLOW_PIP_REQUIREMENTS }}" >> ${{ env.ENV_PATH }}
-        echo "${{ vars.AIRFLOW_PROJ_DIR }}" >> ${{ env.ENV_PATH }}
-        echo "${{ vars.AIRFLOW_UID }}" >> ${{ env.ENV_PATH }}
-        echo "${{ vars.AIRFLOW_USER_PASSWORD }}" >> ${{ env.ENV_PATH }}
-        echo "${{ vars.AIRFLOW_USER_USERNAME }}" >> ${{ env.ENV_PATH }}
+        echo "${{ vars.AIRFLOW_ACCESS_INFOS }}" > ${{ env.ENV_PATH }}
+        echo "${{ vars.AIRFLOW_LOGIN_INFOS }}" >> ${{ env.ENV_PATH }}
+        echo "${{ vars.AIRFLOW_ETCS }}" >> ${{ env.ENV_PATH }}
+        echo "${{ vars.POSTGRES_ACCESS_INFOS }}" >> ${{ env.ENV_PATH }}
+        echo "${{ vars.POSTGRES_LOGIN_INFOS }}" >> ${{ env.ENV_PATH }}
+        echo "${{ vars.REDIS_ACCESS_INFOS }}" >> ${{ env.ENV_PATH }}
+        echo "${{ vars.REDIS_LOGIN_INFOS }}" >> ${{ env.ENV_PATH }}
 
     - name: Deploy Docker Compose
       run: |
