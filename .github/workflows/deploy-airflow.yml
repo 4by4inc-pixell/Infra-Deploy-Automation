@@ -1,0 +1,31 @@
+
+name: Deploy Docker Compose
+
+on:
+  push:
+    paths:
+      - 'airflow/docker-compose.yaml'
+      - '.github/workflows/deploy-airflow.yml'
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: [self-hosted, base]
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Create .env file from secrets
+      run: |
+        echo "${{ vars.AIRFLOW_IMAGE_NAME }}" > airflow/.env
+        echo "${{ vars.AIRFLOW_PIP_REQUIREMENTS }}" >> airflow/.env
+        echo "${{ vars.AIRFLOW_PROJ_DIR }}" >> airflow/.env
+        echo "${{ vars.AIRFLOW_UID }}" >> airflow/.env
+        echo "${{ vars.AIRFLOW_USER_PASSWORD }}" >> airflow/.env
+        echo "${{ vars.AIRFLOW_USER_USERNAME }}" >> airflow/.env
+
+    - name: Deploy Docker Compose
+      run: |
+        docker compose down
+        docker compose --env-file=airflow/.env up -d
