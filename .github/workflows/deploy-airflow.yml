@@ -8,8 +8,8 @@ on:
       - '.github/workflows/deploy-airflow.yml'
   workflow_dispatch:
 env: 
-  - COMPOSE_PATH: airflow/docker-compose.yaml
-  - ENV_PATH: airflow/.env
+  COMPOSE_PATH: airflow/docker-compose.yaml
+  ENV_PATH: airflow/.env
 jobs:
   deploy:
     runs-on: [self-hosted, base]
