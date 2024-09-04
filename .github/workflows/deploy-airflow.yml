@@ -28,4 +28,4 @@ jobs:
     - name: Deploy Docker Compose
       run: |
         docker compose down
-        docker compose --env-file=airflow/.env up -d
+        docker compose --file=airflow/docker-compose.yaml --env-file=airflow/.env up -d
