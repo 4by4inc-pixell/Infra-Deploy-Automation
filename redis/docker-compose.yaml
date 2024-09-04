@@ -1,6 +1,6 @@
 services:
   redis:
-    image: redis:7.2-bookworm  # You can use any version, 7.2-bookworm is used as an example
+    image: redis:7.4-bookworm  # You can use any version, 7.2-bookworm is used as an example
     container_name: redis_server
     ports:
       - "${REDIS_PORT}:6379"  # Exposing Redis on the default port 6379
