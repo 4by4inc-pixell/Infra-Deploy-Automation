@@ -31,4 +31,4 @@ jobs:
     - name: Deploy Docker Compose
       run: |
         docker compose -f ${{ env.COMPOSE_PATH }} down
-        docker compose -f ${{ env.COMPOSE_PATH }} --env-file=${{ env.ENV_PATH }} up -d
+        docker compose -f ${{ env.COMPOSE_PATH }} -p ${{ vars.DOCKER_COMPOSE_PROJECT_NAME }} --env-file=${{ env.ENV_PATH }} up -d
