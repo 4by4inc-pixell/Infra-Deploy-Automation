@@ -15,8 +15,8 @@ spec:
     - tags:
         karpenter.sh/discovery: ${cluster_name} # replace with your cluster name
   amiSelectorTerms:
-    - id: "ami-0a6a4d780d388428a" # Base
-    # - id: "ami-03f54a5406cc83d08" # Cached
+    # - id: "ami-0a6a4d780d388428a" # Base
+    - id: "ami-03f54a5406cc83d08" # Cached
     
   blockDeviceMappings:
     - deviceName: "/dev/xvda"       # 루트 볼륨 장치 이름
