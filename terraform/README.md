@@ -11,3 +11,9 @@ $ terraform init
 $ terraform plan
 $ terraform apply --auto-approve
 ```
+
+## Regist
+
+```bash
+aws eks update-kubeconfig --region <REGION> --name <CLUSTER_NAME>
+```
