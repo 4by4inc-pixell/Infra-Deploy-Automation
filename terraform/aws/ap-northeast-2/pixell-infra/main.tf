@@ -14,6 +14,7 @@ module "eks" {
   vpc_id=module.vpc.vpc_id
   private_subnets=module.vpc.private_subnets
   intra_subnets=module.vpc.intra_subnets
+  depends_on = [ module.vpc ]
 }
 
 module "karpenter" {
@@ -25,5 +26,5 @@ module "karpenter" {
   aws_token_password = data.aws_ecrpublic_authorization_token.token.password
   cluster_certificate_authority_data = module.eks.cluster_certificate_authority_data
   tags = var.tags
-
+  depends_on = [ module.eks ]
 }

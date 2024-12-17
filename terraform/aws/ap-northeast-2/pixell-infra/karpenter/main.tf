@@ -10,7 +10,8 @@ module "karpenter" {
   create_pod_identity_association = true
   queue_name = var.cluster_queue_name
   node_iam_role_additional_policies = {
-    AmazonSSMManagedInstanceCore = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
+    AmazonSSMManagedInstanceCore = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore",
+    AmazonSQSFullAccess = "arn:aws:iam::aws:policy/AmazonSQSFullAccess",
   }
 
   tags = var.tags

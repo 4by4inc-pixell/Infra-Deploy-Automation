@@ -1,3 +1,6 @@
+**/kubectl-secrets/*
+!**/kubectl-secrets/README.md
+
 # Local .terraform directories
 **/.terraform/*
 

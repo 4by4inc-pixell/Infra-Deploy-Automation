@@ -23,3 +23,9 @@ variable "tags" {
     author = "HyoengSeok Kim"
   }
 }
+
+variable "env_path" {
+  description = "env file path"
+  type        = string
+  default     = "./.env"
+}

@@ -47,14 +47,3 @@ resource "kubectl_manifest" "karpenter_node_pool" {
     helm_release.karpenter
   ]
 }
-
-resource "kubectl_manifest" "user_k8s_manifests" {
-  for_each = fileset("${path.module}/../kubectl-manifests", "**/*.yaml")
-  yaml_body = templatefile("${path.module}/../kubectl-manifests/${each.value}", {
-    node_iam_role_name = module.karpenter.node_iam_role_name
-    cluster_name       = var.cluster_name
-  })
-  depends_on = [
-    helm_release.karpenter
-  ]
-}

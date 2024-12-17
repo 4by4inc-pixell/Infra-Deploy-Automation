@@ -1,0 +1,19 @@
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: mlflow-hpa
+  namespace: mlflow
+spec:
+  scaleTargetRef: 
+    apiVersion: apps/v1
+    kind: Deployment
+    name: mlflow-deploy  # 스케일링할 Deployment 이름
+  minReplicas: 1          # 최소 Pod 수
+  maxReplicas: 10         # 최대 Pod 수
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu         # CPU 사용량 기준
+        target:
+          type: Utilization
+          averageUtilization: 70  # CPU 사용률 목표값 (%)

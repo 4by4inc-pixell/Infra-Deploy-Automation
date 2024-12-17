@@ -25,7 +25,7 @@ module "eks" {
       instance_types = ["m5.large"]
       min_size       = 1
       max_size       = 4
-      desired_size   = 1
+      desired_size   = 2
 
       iam_role_additional_policies = {
         "AmazonEKSWorkerNodePolicy"          = "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy",

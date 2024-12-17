@@ -15,7 +15,7 @@ spec:
         karpenter.sh/discovery: ${cluster_name} # replace with your cluster name
   amiSelectorTerms:
     # - id: "ami-045657a7b05d4c551" # amd base
-    - id: "ami-08843df5be2477b99"
+    - id: "ami-03d51fdf249b1a76f"
     # - id: "ami-0377d29e0585360f9" # cached
       
   blockDeviceMappings:
