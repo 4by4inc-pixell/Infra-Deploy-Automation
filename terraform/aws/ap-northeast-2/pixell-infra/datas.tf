@@ -72,7 +72,14 @@ resource "aws_iam_policy" "aws_lb_controller_policy" {
           "iam:ListPolicies",
 
           # Shield
-          "shield:GetSubscriptionState"
+          "shield:GetSubscriptionState",
+
+          # WAF v2
+          "wafv2:GetWebACLForResource",
+          "wafv2:GetWebACL",
+          "wafv2:ListWebACLs",
+          "wafv2:AssociateWebACL",
+          "wafv2:DisassociateWebACL",
         ],
         Resource = "*"
       }
