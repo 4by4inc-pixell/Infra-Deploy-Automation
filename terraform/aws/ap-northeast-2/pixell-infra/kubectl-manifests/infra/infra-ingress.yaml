@@ -13,6 +13,15 @@ metadata:
 spec:
   ingressClassName: alb
   rules:
+    - http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: ssl-redirect
+                port:
+                  name: use-annotation
     - host: infra.aipixell.com
       http:
         paths:
