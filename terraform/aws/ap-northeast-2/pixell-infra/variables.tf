@@ -7,7 +7,6 @@ variable "cluster_name" {
 variable "region" {
   description = "The AWS region to deploy in"
   default     = "ap-northeast-2"
-  # default     = "us-west-2"
 }
 
 variable "k8s_version" {

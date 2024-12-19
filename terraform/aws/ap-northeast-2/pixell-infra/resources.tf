@@ -20,17 +20,6 @@ resource "kubernetes_service_account" "aws_load_balancer_controller_sa" {
   ]
 }
 
-# resource "aws_iam_role_policy_attachment" "aws_lb_controller_policy_attach" {
-  
-#   for_each = toset([
-#     "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy",
-#     "arn:aws:iam::aws:policy/AmazonEKSServicePolicy"
-#   ])
-
-#   policy_arn = each.value
-#   role       = aws_iam_role.aws_load_balancer_controller_role.name
-# }
-
 resource "aws_iam_role_policy_attachment" "aws_lb_controller_policy_attach" {
   policy_arn = aws_iam_policy.aws_lb_controller_policy.arn
   role       = aws_iam_role.aws_load_balancer_controller_role.name
@@ -51,18 +40,6 @@ serviceAccount:
 EOF
   ]
   depends_on = [kubernetes_service_account.aws_load_balancer_controller_sa]
-}
-
-
-resource "kubectl_manifest" "user_k8s_manifests" {
-  for_each = fileset("${path.module}/kubectl-manifests", "**/*.yaml")
-  yaml_body = templatefile("${path.module}/kubectl-manifests/${each.value}", {
-    node_iam_role_name = module.karpenter.node_iam_role_name
-    cluster_name       = var.cluster_name
-  })
-  depends_on = [
-    module.karpenter
-  ]
 }
 
 resource "kubectl_manifest" "secrets" {
