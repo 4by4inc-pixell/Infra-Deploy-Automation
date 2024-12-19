@@ -25,10 +25,10 @@ spec:
     - host: infra.aipixell.com
       http:
         paths:
-          - path: /mlflow
+          - path: /
             pathType: Prefix
             backend:
               service:
-                name: mlflow-service
+                name: nginx-service
                 port:
-                  number: 5000
+                  number: 80
