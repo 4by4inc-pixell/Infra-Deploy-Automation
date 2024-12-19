@@ -31,7 +31,7 @@ spec:
           value: "true"
           effect: NoSchedule  # GPU가 필요하지 않은 Pod는 이 노드에 스케줄링되지 않음
   limits:
-    cpu: 2000
+    cpu: 4000
     # memory: 3840Gi
     # nvidia.com/gpu: "40"
   disruption:
