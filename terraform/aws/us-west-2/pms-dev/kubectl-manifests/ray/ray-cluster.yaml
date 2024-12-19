@@ -2,6 +2,7 @@ apiVersion: ray.io/v1
 kind: RayCluster
 metadata:
   name: raycluster
+  namespace: ray
 spec:
   # The version of Ray you are using. Make sure all Ray containers are running this version of Ray.
   # Use the Ray nightly or Ray version >= 2.10.0 and KubeRay 1.1.0 or later for autoscaler v2.
@@ -53,8 +54,8 @@ spec:
               cpu: "4"
               memory: "8Gi"
           env:
-            # - name: RAY_DEDUP_LOGS
-            #   value: "0"
+            - name: RAY_DEDUP_LOGS
+              value: "0"
             - name: RAY_enable_autoscaler_v2 # Pass env var for the autoscaler v2.
               value: "1"
         restartPolicy: Never # No restart to avoid reuse of pod for different ray nodes.
@@ -82,7 +83,7 @@ spec:
       
   - replicas: 0
     minReplicas: 0
-    maxReplicas: 40
+    maxReplicas: 10
     groupName: gpu-group-s
     rayStartParams: {}
     # Pod template
@@ -108,7 +109,7 @@ spec:
   
   - replicas: 0
     minReplicas: 0
-    maxReplicas: 20
+    maxReplicas: 4
     groupName: gpu-group-m
     rayStartParams: {}
     # Pod template
@@ -134,7 +135,7 @@ spec:
                
   - replicas: 0
     minReplicas: 0
-    maxReplicas: 20
+    maxReplicas: 4
     groupName: gpu-group-l
     rayStartParams: {}
     # Pod template
