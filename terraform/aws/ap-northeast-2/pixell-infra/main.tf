@@ -19,8 +19,12 @@ module "eks" {
 
 module "kubectl" {
   source = "../../../modules/kubectl"
-  cluster_name = var.cluster_name
-  node_iam_role_name = module.karpenter.node_iam_role_name
+  template_env = {
+    "cluster_name": var.cluster_name,
+    "node_iam_role_name": module.karpenter.node_iam_role_name,
+    "efs_id": resource.aws_efs_file_system.infra.id,
+  }
+  
   depends_on = [ module.eks ]
   manifests_path = "${path.module}/kubectl-manifests"
 }
