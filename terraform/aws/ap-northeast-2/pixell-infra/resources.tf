@@ -1,4 +1,44 @@
+resource "aws_efs_file_system" "infra" {
+  creation_token   = "infra-efs"
+  performance_mode = "generalPurpose"
+  lifecycle_policy {
+    transition_to_ia = "AFTER_30_DAYS" # 30일 후 비활성 데이터를 IA로 전환
+  }
+  tags = {
+    Name = "infra-efs"
+  }
+}
 
+resource "aws_security_group" "efs_sg" {
+  name_prefix = "efs-sg-"
+  description = "EFS Security Group"
+  vpc_id      = module.vpc.vpc_id
+
+  ingress {
+    from_port   = 2049
+    to_port     = 2049
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "efs-security-group"
+  }
+}
+
+resource "aws_efs_mount_target" "infra" {
+  count           = length(module.vpc.private_subnets)
+  file_system_id  = aws_efs_file_system.infra.id
+  subnet_id       = element(module.vpc.private_subnets, count.index)
+  security_groups = [aws_security_group.efs_sg.id]
+}
 
 resource "aws_iam_role" "aws_load_balancer_controller_role" {
   name               = "aws-load-balancer-controller-role"
