@@ -12,18 +12,3 @@ spec:
       protocol: TCP
   selector:
     app: n8n
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: n8n-pg-svc
-  namespace: infra
-spec:
-  type: NodePort 
-  ports:
-    - name: "5432"
-      port: 5432
-      targetPort: 5432
-      protocol: TCP
-  selector:
-    app: n8n-pg
