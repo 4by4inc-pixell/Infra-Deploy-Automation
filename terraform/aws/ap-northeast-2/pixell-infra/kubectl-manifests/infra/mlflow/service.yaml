@@ -6,7 +6,7 @@ metadata:
 spec:
   type: NodePort # ALB는 Ingress를 통해 Pod에 연결되므로 NodePort로 설정
   selector:
-    app.kubernetes.io/name: app-mlflow
+    app: mlflow-app
   ports:
     - name: http
       protocol: TCP

@@ -1,18 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  labels:
-    app: grafana-deploy
   name: grafana-deploy
   namespace: infra
+  labels:
+    app: grafana-app
 spec:
+  replicas: 1
   selector:
     matchLabels:
-      app: grafana-deploy
+      app: grafana-app
   template:
     metadata:
       labels:
-        app: grafana-deploy
+        app: grafana-app
     spec:
       securityContext:
         fsGroup: 472

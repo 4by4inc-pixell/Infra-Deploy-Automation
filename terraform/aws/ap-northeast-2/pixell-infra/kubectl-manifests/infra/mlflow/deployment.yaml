@@ -4,27 +4,27 @@ metadata:
   namespace: infra
   name: mlflow-deploy
   labels:
-    app.kubernetes.io/name: app-mlflow
+    app: mlflow-app
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app.kubernetes.io/name: app-mlflow
+      app: mlflow-app
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: app-mlflow
+        app: mlflow-app
     spec:
       containers:
       - name: mlflow
         image: python:3.12
         resources:
           requests:
-            cpu: "2"      
-            memory: "2Gi"
+            cpu: "250m"      
+            memory: "512Mi"
           limits:
-            cpu: "2"
-            memory: "2Gi"
+            cpu: "500m"
+            memory: "1Gi"
         ports:
         - containerPort: 5000
         command: ["/bin/sh", "-c"] # 시작 명령어 추가
