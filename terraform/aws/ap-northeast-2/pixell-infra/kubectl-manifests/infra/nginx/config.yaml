@@ -6,10 +6,16 @@ metadata:
 data:
   nginx.conf: |
     events { }
+    
     http {
         server {
             listen 80;
             server_name infra.aipixell.com;
+
+            location = / {
+                return 200 "Pixell-Infra\n";
+                add_header Content-Type text/plain;
+            }
 
             location /mlflow/ {
                 proxy_pass http://mlflow-service.infra.svc.cluster.local:5000/;
@@ -40,6 +46,12 @@ data:
                 # 시간 초과 설정
                 proxy_read_timeout 360s;
                 proxy_send_timeout 360s;
+            }
+
+            location /grafana/ {
+                proxy_pass http://grafana-svc.infra.svc.cluster.local:3000;
+                proxy_set_header Host $host;
+
             }
         }
     }
