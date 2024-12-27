@@ -82,6 +82,7 @@ EOF
   depends_on = [kubernetes_service_account.aws_load_balancer_controller_sa]
 }
 
+
 resource "kubectl_manifest" "secrets" {
   for_each = fileset("${path.module}/kubectl-secrets", "**/*.yaml")
   yaml_body = templatefile("${path.module}/kubectl-secrets/${each.value}", {

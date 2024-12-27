@@ -28,10 +28,11 @@ module "eks" {
       desired_size   = 2
 
       iam_role_additional_policies = {
-        "AmazonEKSWorkerNodePolicy"          = "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy",
+        "AmazonEKSWorkerNodePolicy"          = "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy"
         "AmazonEC2ContainerRegistryReadOnly" = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
         "AmazonEKS_CNI_Policy"              = "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
         "AmazonSSMManagedInstanceCore"              = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
+        "AmazonEBSCSIDriverPolicy" = "arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy"
         "AmazonEFSCSIDriverPolicy" = "arn:aws:iam::aws:policy/service-role/AmazonEFSCSIDriverPolicy"
       }
     }
