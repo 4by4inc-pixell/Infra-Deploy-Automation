@@ -17,16 +17,35 @@ spec:
     spec:
       containers:
       - name: mlflow
-        image: python:3.12
+        image: ghcr.io/mlflow/mlflow:v2.19.0
         resources:
           requests:
-            cpu: "250m"      
-            memory: "512Mi"
+            cpu: "500m"      
+            memory: "1Gi"
           limits:
             cpu: "500m"
             memory: "1Gi"
         ports:
         - containerPort: 5000
+        startupProbe:
+          httpGet:
+            path: /
+            port: 5000
+          initialDelaySeconds: 30  # 첫 프로브 실행까지 대기 시간
+          periodSeconds: 10         # 프로브 실행 주기
+          failureThreshold: 12     # 실패를 허용하는 최대 횟수
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 5000
+          initialDelaySeconds: 5  # 컨테이너가 시작된 후 첫 프로브를 실행하기 전 대기 시간
+          periodSeconds: 10       # 프로브 실행 주기
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 5000
+          initialDelaySeconds: 10
+          periodSeconds: 10
         command: ["/bin/sh", "-c"] # 시작 명령어 추가
         envFrom:
         - secretRef:
@@ -34,8 +53,7 @@ spec:
         args:
         - |
           pip install psycopg2-binary boto3
-          pip install mlflow==2.19.0
           mlflow server --host 0.0.0.0 \
           --port 5000 \
-          --default-artifact-root $${S3_BUCKET} \
-          --backend-store-uri postgresql+psycopg2://$${POSTGRES_USERNAME}:$${POSTGRES_PASSWORD}@$${POSTGRES_HOST}:$${POSTGRES_PORT}/$${POSTGRES_MLFLOW_DATABASE} 
+          --default-artifact-root $S3_BUCKET \
+          --backend-store-uri postgresql+psycopg2://$POSTGRES_USERNAME:$POSTGRES_PASSWORD@$POSTGRES_HOST:$POSTGRES_PORT/$POSTGRES_MLFLOW_DATABASE 

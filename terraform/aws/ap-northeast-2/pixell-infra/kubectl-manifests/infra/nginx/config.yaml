@@ -17,6 +17,10 @@ data:
                 add_header Content-Type text/plain;
             }
 
+            location /healthz {
+                return 200 "OK";  # 헬스 체크용 응답
+            }
+
             location /mlflow/ {
                 proxy_pass http://mlflow-service.infra.svc.cluster.local:5000/;
                 proxy_set_header Host $host;

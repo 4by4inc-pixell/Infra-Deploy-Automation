@@ -25,6 +25,25 @@ spec:
             memory: "256Mi"
         ports:
         - containerPort: 80
+        startupProbe:
+          httpGet:
+            path: /healthz
+            port: 80
+          initialDelaySeconds: 10  # 첫 프로브 실행까지 대기 시간
+          periodSeconds: 5         # 프로브 실행 주기
+          failureThreshold: 20     # 실패를 허용하는 최대 횟수
+        readinessProbe:
+          httpGet:
+            path: /healthz
+            port: 80
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: 80
+          initialDelaySeconds: 10
+          periodSeconds: 10
         volumeMounts:
         - name: nginx-config
           mountPath: /etc/nginx/nginx.conf
