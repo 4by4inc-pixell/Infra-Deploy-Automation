@@ -6,7 +6,7 @@ metadata:
 spec:
   # The version of Ray you are using. Make sure all Ray containers are running this version of Ray.
   # Use the Ray nightly or Ray version >= 2.10.0 and KubeRay 1.1.0 or later for autoscaler v2.
-  rayVersion: '2.24.0'
+  rayVersion: '2.40.0'
   enableInTreeAutoscaling: true
   autoscalerOptions:
     upscalingMode: Default
@@ -34,7 +34,7 @@ spec:
         containers:
         # The Ray head container
         - name: ray-head
-          image: ghcr.io/4by4inc-pixell/pms-ray-cluster:0.2.2-basic
+          image: ghcr.io/4by4inc-pixell/pms-ray-cluster:1.0.1-basic
           ports:
           - containerPort: 6379
             name: gcs
@@ -53,11 +53,11 @@ spec:
             requests:
               cpu: "4"
               memory: "8Gi"
-          env:
-            - name: RAY_DEDUP_LOGS
-              value: "0"
-            - name: RAY_enable_autoscaler_v2 # Pass env var for the autoscaler v2.
-              value: "1"
+          # env:
+          #   - name: RAY_DEDUP_LOGS
+          #     value: "0"
+          #   - name: RAY_enable_autoscaler_v2 # Pass env var for the autoscaler v2.
+          #     value: "1"
         restartPolicy: Never # No restart to avoid reuse of pod for different ray nodes.
   workerGroupSpecs:
   # the Pod replicas in this group typed worker
@@ -71,7 +71,7 @@ spec:
       spec:
         containers:
         - name: ray-worker-cpu
-          image: ghcr.io/4by4inc-pixell/pms-ray-cluster:0.2.2-basic
+          image: ghcr.io/4by4inc-pixell/pms-ray-cluster:1.0.1-basic
           resources:
             limits:
               cpu: "3500m"
@@ -91,7 +91,7 @@ spec:
       spec:
         containers:
         - name: ray-worker-gpu
-          image: ghcr.io/4by4inc-pixell/pms-ray-cluster:0.2.2-trt
+          image: ghcr.io/4by4inc-pixell/pms-ray-cluster:1.0.1-trt
           resources:
             limits:
               cpu: "4"
@@ -117,7 +117,7 @@ spec:
       spec:
         containers:
         - name: ray-worker-gpu
-          image: ghcr.io/4by4inc-pixell/pms-ray-cluster:0.2.2-trt
+          image: ghcr.io/4by4inc-pixell/pms-ray-cluster:1.0.1-trt
           resources:
             limits:
               cpu: "90"
@@ -143,7 +143,7 @@ spec:
       spec:
         containers:
         - name: ray-worker-gpu
-          image: ghcr.io/4by4inc-pixell/pms-ray-cluster:0.2.2-trt
+          image: ghcr.io/4by4inc-pixell/pms-ray-cluster:1.0.1-trt
           resources:
             limits:
               cpu: "192"

@@ -16,12 +16,12 @@ spec:
         karpenter.sh/discovery: ${cluster_name} # replace with your cluster name
   amiSelectorTerms:
     # - id: "ami-0a6a4d780d388428a" # Base
-    - id: "ami-03f54a5406cc83d08" # Cached
+    - id: "ami-0432e62e64d40b939" # Cached
     
   blockDeviceMappings:
     - deviceName: "/dev/xvda"       # 루트 볼륨 장치 이름
       ebs:
-        volumeSize: 1000Gi           # EBS 볼륨 크기를 100GiB로 설정
+        volumeSize: 1000Gi           # EBS 볼륨 크기를 1000GiB로 설정
         volumeType: gp3             # 볼륨 유형 (gp3, gp2 등)
         iops: 16000
         throughput: 1000
