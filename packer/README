@@ -1,0 +1,8 @@
+# [Packer](https://developer.hashicorp.com/packer)
+
+## Build
+
+```bash
+pakcer init .
+packer build $FILE_PATH
+```
