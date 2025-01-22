@@ -4,9 +4,12 @@ metadata:
   name: raycluster-head-nlb
   namespace: ray
   annotations:
-    service.beta.kubernetes.io/aws-load-balancer-type: "nlb"                 # NLB 사용
-    service.beta.kubernetes.io/aws-load-balancer-scheme: "internet-facing"   # 외부 노출
-    service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: "instance" # svc 연결
+    service.beta.kubernetes.io/aws-load-balancer-name: "prod-ray-nlb" # NLB 이름 지정
+    service.beta.kubernetes.io/aws-load-balancer-additional-resource-tags: "Environment=prod"
+    service.beta.kubernetes.io/aws-load-balancer-security-groups: ""      
+    service.beta.kubernetes.io/aws-load-balancer-type: "nlb"                 
+    service.beta.kubernetes.io/aws-load-balancer-scheme: "internet-facing" 
+    service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: "instance" 
     service.beta.kubernetes.io/aws-load-balancer-healthcheck-protocol: "TCP" # 헬스체크 프로토콜
     service.beta.kubernetes.io/aws-load-balancer-healthcheck-port: "80"     # 헬스체크 포트 (Dashboard 서비스 포트)
   labels:
