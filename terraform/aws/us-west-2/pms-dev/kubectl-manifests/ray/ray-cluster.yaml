@@ -54,8 +54,8 @@ spec:
               cpu: "4"
               memory: "8Gi"
           env:
-          #   - name: RAY_DEDUP_LOGS
-          #     value: "0"
+            - name: RAY_DEDUP_LOGS
+              value: "0"
             - name: RAY_enable_autoscaler_v2 # Pass env var for the autoscaler v2.
               value: "1"
         restartPolicy: Never # No restart to avoid reuse of pod for different ray nodes.
