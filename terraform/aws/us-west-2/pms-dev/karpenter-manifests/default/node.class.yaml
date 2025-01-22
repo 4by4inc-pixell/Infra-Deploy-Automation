@@ -7,6 +7,7 @@ spec:
   role: ${node_iam_role_name} # replace with your cluster name
   tags:
     node-class: default
+    Name: eks-${cluster_name}-default
   subnetSelectorTerms:
     - tags:
         karpenter.sh/discovery: ${cluster_name} # replace with your cluster name
