@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: influxdb2
+  namespace: influx
+  labels:
+    app.kubernetes.io/name: influxdb2
+    app.kubernetes.io/instance: influx
+    app.kubernetes.io/version: "2.7.4"
+    app.kubernetes.io/managed-by: Helm
+    helm.sh/chart: influxdb2-2.1.2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: influxdb2
+      app.kubernetes.io/instance: influx
+  serviceName: "influxdb2"
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: influxdb2
+        app.kubernetes.io/instance: influx
+    spec:
+      serviceAccountName: influxdb2-sa
+      volumes:
+        - name: influxdb-data
+          persistentVolumeClaim:
+            claimName: influx-pvc
+      containers:
+        - name: influxdb2
+          image: "influxdb:2.7.4-alpine"
+          imagePullPolicy: IfNotPresent
+          volumeMounts:
+            - name: influxdb-data
+              mountPath: /var/lib/influxdb2
+          ports:
+            - name: http
+              containerPort: 8086
+              protocol: TCP
+          envFrom:
+          - secretRef:
+              name: influxdb-secrets
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: http
+              scheme: HTTP
+            initialDelaySeconds: 0
+            periodSeconds: 10
+            timeoutSeconds: 1
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: http
+              scheme: HTTP
+            initialDelaySeconds: 0
+            periodSeconds: 10
+            timeoutSeconds: 1
+            successThreshold: 1
+            failureThreshold: 3
+          resources:
+            {}

@@ -1,0 +1,17 @@
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: influxdb2-pdb
+  namespace: influx
+  labels:
+    app.kubernetes.io/name: influxdb2
+    app.kubernetes.io/instance: influx
+    app.kubernetes.io/version: "2.7.4"
+    app.kubernetes.io/managed-by: Helm
+    helm.sh/chart: influxdb2-2.1.2
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: influxdb2
+      app.kubernetes.io/instance: influx
