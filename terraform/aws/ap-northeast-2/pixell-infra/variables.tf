@@ -28,3 +28,9 @@ variable "env_path" {
   type        = string
   default     = "./.env"
 }
+
+variable "certificate_arn" {
+  description = "value of certificate_arn"
+  type        = string
+  default     = "arn:aws:acm:ap-northeast-2:760235743813:certificate/18d5258b-464a-4b9f-a34e-ddbb47bc9888"
+}

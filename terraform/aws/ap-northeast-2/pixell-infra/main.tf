@@ -47,3 +47,10 @@ module "karpenter" {
   tags = var.tags
   depends_on = [ module.eks ]
 }
+
+module "prefect" {
+  source = "../../../modules/prefect"
+  efs_id = resource.aws_efs_file_system.infra.id
+  certificate_arn = var.certificate_arn
+  domain_url = "prefect.aipixell.com"
+}
