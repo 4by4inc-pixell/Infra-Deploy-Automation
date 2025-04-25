@@ -8,7 +8,7 @@ spec:
   role: ${node_iam_role_name} # replace with your cluster name
   tags:
     node-class: node-gpu
-    Name: eks-${cluster_name}-cpu
+    Name: eks-${cluster_name}-gpu
   subnetSelectorTerms:
     - tags:
         karpenter.sh/discovery: ${cluster_name} # replace with your cluster name
