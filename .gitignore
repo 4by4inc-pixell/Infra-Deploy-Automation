@@ -1,3 +1,5 @@
+*.env
+
 **/kubectl-secrets/*
 !**/kubectl-secrets/README.md
 
