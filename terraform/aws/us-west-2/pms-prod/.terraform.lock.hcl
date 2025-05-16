@@ -26,8 +26,9 @@ provider "registry.terraform.io/alekc/kubectl" {
 
 provider "registry.terraform.io/hashicorp/aws" {
   version     = "5.91.0"
-  constraints = ">= 4.33.0, >= 5.79.0"
+  constraints = ">= 4.33.0, >= 5.46.0, >= 5.79.0"
   hashes = [
+    "h1:bZ3AM8Qd1veQoUJqOb7OVp/ElmLg/hkz3bHL2DZZ5Tk=",
     "h1:rqkcSC4Ou2D7QZTrm/VU+71Ulqqwp8mU9jx3FVYnMCo=",
     "zh:03ee14261b25aee94c735ed6ef7cce47900ab7bdf462335432ca034d0ba74ca2",
     "zh:32a3759049c9c2cd041d1257cf16cb90a5ce586e1d0a6fe5f8ebd0ec1ba8e071",
@@ -52,6 +53,7 @@ provider "registry.terraform.io/hashicorp/cloudinit" {
   constraints = ">= 2.0.0"
   hashes = [
     "h1:ET4K0kdtPzOEr2M4hmA26jkAHbqN8YTSpcKtPDJxgyU=",
+    "h1:afnqn3XPnO40laFt+SVHPPKsg1j3HXT0VAO0xBVvmrY=",
     "zh:1321b5ddede56be3f9b35bf75d7cda79adcb357fad62eb8677b6595e0baaa6cd",
     "zh:265d66e61b9cd16ca1182ebf094cc0a08fb3687e8193a1dbac6899b16c237151",
     "zh:3875c3a20e082ac55d5ff24bcaf7133ebc90c7f999fd0fb37cf0f0003474c94c",
@@ -72,6 +74,7 @@ provider "registry.terraform.io/hashicorp/helm" {
   constraints = ">= 2.7.0"
   hashes = [
     "h1:K5FEjxvDnxb1JF1kG1xr8J3pNGxoaR3Z0IBG9Csm/Is=",
+    "h1:kQMkcPVvHOguOqnxoEU2sm1ND9vCHiT8TvZ2x6v/Rsw=",
     "zh:06fb4e9932f0afc1904d2279e6e99353c2ddac0d765305ce90519af410706bd4",
     "zh:104eccfc781fc868da3c7fec4385ad14ed183eb985c96331a1a937ac79c2d1a7",
     "zh:129345c82359837bb3f0070ce4891ec232697052f7d5ccf61d43d818912cf5f3",
@@ -90,6 +93,7 @@ provider "registry.terraform.io/hashicorp/helm" {
 provider "registry.terraform.io/hashicorp/kubernetes" {
   version = "2.36.0"
   hashes = [
+    "h1:94wlXkBzfXwyLVuJVhMdzK+VGjFnMjdmFkYhQ1RUFhI=",
     "h1:vdY0sxo7ahwuz/y7flXTE04tSwn0Zhxyg6n62aTmAHI=",
     "zh:07f38fcb7578984a3e2c8cf0397c880f6b3eb2a722a120a08a634a607ea495ca",
     "zh:1adde61769c50dbb799d8bf8bfd5c8c504a37017dfd06c7820f82bcf44ca0d39",
@@ -132,6 +136,7 @@ provider "registry.terraform.io/hashicorp/time" {
   constraints = ">= 0.9.0"
   hashes = [
     "h1:W2XSd8unrfQsFLBCqtOZf8GywZTU7FOgAI95YmIwxQw=",
+    "h1:iwR4JouIoeVPDabb8XCqsiaZlZ28IcB3tDD9MuPeSXE=",
     "zh:3776dd78ef3053562ccb2f8916d5d3f21a28f05e78859f0f1e4510525f891ecb",
     "zh:541ca0b56f808c15d208b9396f149563b133223c4b66cdefbcfe2d8f1c23497e",
     "zh:67ed315f3572eb20ce6778423b14fbb6faba3090f454bc20ec4146489b4738c0",
