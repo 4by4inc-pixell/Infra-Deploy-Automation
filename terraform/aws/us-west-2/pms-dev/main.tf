@@ -45,3 +45,12 @@ module "karpenter" {
   tags = var.tags
   depends_on = [ module.eks ]
 }
+
+module "aws-load-balancer-controller" {
+  source = "../../../modules/aws-load-balancer-controller"
+  region = var.region
+  cluster_name = var.cluster_name
+  vpc_id = module.vpc.vpc_id
+  depends_on = [ module.eks ]
+  cluster_oidc_issuer_url = module.eks.cluster_oidc_issuer_url
+}
