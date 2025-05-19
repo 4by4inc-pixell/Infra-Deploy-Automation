@@ -17,8 +17,6 @@ module "eks" {
   depends_on = [ module.vpc ]
 }
 
-
-
 module "kubectl" {
   source = "../../../modules/kubectl"
   template_env = {
