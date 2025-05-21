@@ -1,5 +1,5 @@
-resource "kubernetes_manifest" "raycluster" {
-  manifest = yamldecode(templatefile("${path.module}/ray-cluster.yaml.tmpl", {
+resource "kubectl_manifest" "raycluster" {
+  yaml_body = templatefile("${path.module}/ray-cluster.yaml.tmpl", {
     ray_cluster_name                      = var.ray_cluster_name
     namespace                             = var.namespace
     ray_version                           = var.ray_version
@@ -19,9 +19,5 @@ resource "kubernetes_manifest" "raycluster" {
     ray_gpuworker_gpu_use                 = var.ray_gpuworker_gpu_use
     ray_gpuworker_replica_min             = var.ray_gpuworker_replica_min
     ray_gpuworker_replica_max             = var.ray_gpuworker_replica_max
-  }))
-  field_manager {
-    name            = "terraform"
-    force_conflicts = true
-  }
+  })
 }
