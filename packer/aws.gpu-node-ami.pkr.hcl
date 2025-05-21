@@ -12,6 +12,11 @@ variable "ami_prefix" {
   default = "eks-gpu-node-ami"
 }
 
+variable "aws_region" {
+  type    = string
+  default = "us-west-2"
+}
+
 locals {
   timestamp = regex_replace(timestamp(), "[- TZ:]", "")
 }
@@ -19,7 +24,7 @@ locals {
 source "amazon-ebs" "eks-gpu" {
   ami_name      = "${var.ami_prefix}-${local.timestamp}"
   instance_type = "g5.2xlarge"
-  region        = "us-west-2"
+  region        = "${var.aws_region}"
   source_ami_filter {
     filters = {
       name                = "amazon-eks-gpu-node-1.31-v2025*"
