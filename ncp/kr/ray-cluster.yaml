@@ -1,0 +1,120 @@
+apiVersion: ray.io/v1
+kind: RayCluster
+metadata:
+  name: ray-train-cluster
+  namespace: ray
+spec:
+  rayVersion: 2.47.1
+  enableInTreeAutoscaling: true
+  autoscalerOptions:
+    upscalingMode: Default
+    idleTimeoutSeconds: 300
+    imagePullPolicy: IfNotPresent
+    # Optionally specify the Autoscaler container's securityContext.
+    securityContext: {}
+    env: []
+    envFrom: []
+    resources:
+      limits:
+        cpu: 500m
+        memory: 512Mi
+      requests:
+        cpu: 500m
+        memory: 512Mi
+  # Ray head pod template
+  headGroupSpec:
+    rayStartParams:
+      # Setting "num-cpus: 0" to avoid any Ray actors or tasks being scheduled on the Ray head Pod.
+      num-cpus: "0"
+    # Pod template
+    template:
+      spec:
+        containers:
+        # The Ray head container
+        - name: ray-head
+          image: rayproject/ray:2.47.1-py312-cpu
+          ports:
+          - containerPort: 6379
+            name: gcs
+          - containerPort: 8265
+            name: dashboard
+          - containerPort: 10001
+            name: client
+          lifecycle:
+            preStop:
+              exec:
+                command: ["/bin/sh","-c","ray stop"]
+          resources:
+            limits:
+              cpu: 3000m
+              memory: 12Gi
+            requests:
+              cpu: 3000m
+              memory: 12Gi
+          env:
+            - name: RAY_DEDUP_LOGS
+              value: "0"
+            - name: RAY_enable_autoscaler_v2 # Pass env var for the autoscaler v2.
+              value: "1"
+        tolerations:
+          - key: "ray"
+            operator: "Equal"
+            value: "cpu"
+            effect: "NoSchedule"
+        restartPolicy: Never # No restart to avoid reuse of pod for different ray nodes.
+  workerGroupSpecs:
+  # the Pod replicas in this group typed worker
+  - replicas: 0
+    minReplicas: 0
+    maxReplicas: 100
+    groupName: cpu-group
+    rayStartParams: {}
+    # Pod template
+    template:
+      spec:
+        containers:
+        - name: ray-worker-cpu
+          image: rayproject/ray:2.47.1-py312-cpu
+          resources:
+            limits:
+              cpu: 1000m
+              memory: 1Gi
+            requests:
+              cpu: 1000m
+              memory: 1Gi
+        restartPolicy: Never # Never restart a pod to avoid pod reuse
+        tolerations:
+          - key: "ray"
+            operator: "Equal"
+            value: "cpu"
+            effect: "NoSchedule"
+      
+  - replicas: 0
+    minReplicas: 0
+    maxReplicas: 16
+    groupName: gpu-group
+    rayStartParams: {}
+    # Pod template
+    template:
+      spec:
+        containers:
+        - name: ray-worker-gpu
+          image: rayproject/ray:2.47.1-py312-gpu
+          resources:
+            limits:
+              cpu: 4
+              memory: 47Gi
+              nvidia.com/gpu: 1
+            requests:
+              cpu: 4
+              memory: 47Gi
+              nvidia.com/gpu: 1
+        tolerations:
+          - key: nvidia.com/gpu
+            operator: "Exists"
+            effect: "NoSchedule"
+          - key: "ray"
+            operator: "Equal"
+            value: "gpu"
+            effect: "NoSchedule"
+        restartPolicy: Never # Never restart a pod to avoid pod reuse

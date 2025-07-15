@@ -1,0 +1,26 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: ray-nlb
+  annotations:
+    service.beta.kubernetes.io/ncloud-load-balancer-layer-type: "nlb"
+    service.beta.kubernetes.io/ncloud-load-balancer-internal: "true"    
+    service.beta.kubernetes.io/ncloud-load-balancer-size: "SMALL"
+spec:
+  ports:
+  - name: dashboard
+    port: 80
+    targetPort: 8265
+  - name: metric
+    port: 8080
+    targetPort: 8080
+  - name: client
+    port: 10001
+    targetPort: 10001
+  selector:
+    app.kubernetes.io/created-by: "kuberay-operator"
+    app.kubernetes.io/name: "kuberay"
+    ray.io/cluster: ray-train-cluster
+    ray.io/identifier: ray-train-cluster-head
+    ray.io/node-type: "head"
+  type: LoadBalancer
