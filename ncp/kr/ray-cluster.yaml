@@ -62,6 +62,9 @@ spec:
             value: "cpu"
             effect: "NoSchedule"
         restartPolicy: Never # No restart to avoid reuse of pod for different ray nodes.
+        nodeSelector:
+          np-type: ray-cpu
+
   workerGroupSpecs:
   # the Pod replicas in this group typed worker
   - replicas: 0
@@ -88,6 +91,8 @@ spec:
             operator: "Equal"
             value: "cpu"
             effect: "NoSchedule"
+        nodeSelector:
+          np-type: ray-cpu
       
   - replicas: 0
     minReplicas: 0
@@ -102,13 +107,14 @@ spec:
           image: rayproject/ray:2.47.1-py312-gpu
           resources:
             limits:
-              cpu: 4
-              memory: 47Gi
+              cpu: 3500m
+              memory: 40Gi
               nvidia.com/gpu: 1
             requests:
-              cpu: 4
-              memory: 47Gi
+              cpu: 3500m
+              memory: 40Gi
               nvidia.com/gpu: 1
+        restartPolicy: Never # Never restart a pod to avoid pod reuse
         tolerations:
           - key: nvidia.com/gpu
             operator: "Exists"
@@ -117,4 +123,5 @@ spec:
             operator: "Equal"
             value: "gpu"
             effect: "NoSchedule"
-        restartPolicy: Never # Never restart a pod to avoid pod reuse
+        nodeSelector:
+          np-type: ray-gpu
