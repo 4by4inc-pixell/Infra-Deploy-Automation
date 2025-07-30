@@ -1,5 +1,5 @@
 resource "kubectl_manifest" "raycluster" {
-  yaml_body = templatefile("${path.module}/ray-cluster.yaml.tmpl", {
+  yaml_body = templatefile("${path.module}/${var.templatefile_path}", {
     ray_cluster_name                      = var.ray_cluster_name
     namespace                             = var.namespace
     ray_version                           = var.ray_version

@@ -70,3 +70,7 @@ variable "ray_gpuworker_replica_max" {
   type = number
   default = 10
 }
+variable "templatefile_path" {
+  type = string
+  default = "ray-cluster.yaml"
+}

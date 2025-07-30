@@ -1,12 +1,13 @@
 apiVersion: karpenter.sh/v1
 kind: NodePool
 metadata:
-  name: node-gpu
+  name: node-gpu-train
 spec:
   template:
     metadata:
       labels:
-        node-pool: node-gpu
+        node-pool: node-gpu-train
+        ray/type: gpu
     spec:
       requirements:
         - key: kubernetes.io/arch
@@ -24,10 +25,13 @@ spec:
         - key: karpenter.k8s.aws/instance-generation
           operator: In
           values: ["5"]
+        - key: karpenter.k8s.aws/instance-size
+          operator: In
+          values: ["xlarge", "2xlarge", "4xlarge"]
       nodeClassRef:
         group: karpenter.k8s.aws
         kind: EC2NodeClass
-        name: node-gpu
+        name: node-gpu-train
       expireAfter: 720h # 30 * 24h = 720h
       taints:
         - key: nvidia.com/gpu

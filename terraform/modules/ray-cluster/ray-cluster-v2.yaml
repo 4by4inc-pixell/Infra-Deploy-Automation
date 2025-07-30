@@ -57,11 +57,13 @@ spec:
             - name: RAY_enable_autoscaler_v2 # Pass env var for the autoscaler v2.
               value: "1"
         restartPolicy: Never # No restart to avoid reuse of pod for different ray nodes.
+        nodeSelector:
+          ray/type: cpu
   workerGroupSpecs:
   # the Pod replicas in this group typed worker
   - replicas: 0
     minReplicas: ${ray_cpuworker_replica_min}
-    maxReplicas: ${ray_gpuworker_replica_min}
+    maxReplicas: ${ray_cpuworker_replica_max}
     groupName: cpu-group
     rayStartParams: {}
     # Pod template
@@ -78,7 +80,8 @@ spec:
               cpu: ${ray_cpuworker_cpu_use}
               memory: ${ray_cpuworker_ram_use}
         restartPolicy: Never # Never restart a pod to avoid pod reuse
-      
+        nodeSelector:
+          ray/type: cpu
   - replicas: 0
     minReplicas: ${ray_gpuworker_replica_min}
     maxReplicas: ${ray_gpuworker_replica_max}
@@ -104,3 +107,5 @@ spec:
             operator: "Exists"
             effect: "NoSchedule"
         restartPolicy: Never # Never restart a pod to avoid pod reuse
+        nodeSelector:
+          ray/type: gpu

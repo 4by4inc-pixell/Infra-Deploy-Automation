@@ -4,6 +4,10 @@ metadata:
   name: node-cpu
 spec:
   template:
+    metadata:
+      labels:
+        node-pool: node-cpu
+        ray/type: cpu
     spec:
       requirements:
         - key: kubernetes.io/arch
@@ -27,7 +31,7 @@ spec:
         name: node-cpu
       expireAfter: 720h # 30 * 24h = 720h
   limits:
-    cpu: 64
+    cpu: 640
     # memory: 256Gi
   disruption:
     consolidationPolicy: WhenEmpty
