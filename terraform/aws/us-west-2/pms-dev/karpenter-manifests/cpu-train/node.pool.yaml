@@ -1,14 +1,18 @@
 apiVersion: karpenter.sh/v1
 kind: NodePool
 metadata:
-  name: node-cpu
+  name: node-cpu-train
 spec:
   template:
     metadata:
       labels:
-        node-pool: node-cpu
+        node-pool: node-cpu-train
+        ray/type: train-cpu
     spec:
       requirements:
+        - key: topology.kubernetes.io/zone
+          operator: In
+          values: ["us-west-2a"]
         - key: kubernetes.io/arch
           operator: In
           values: ["amd64"]
@@ -20,15 +24,19 @@ spec:
           values: ["on-demand"]
         - key: karpenter.k8s.aws/instance-category
           operator: In
-          values: ["c", "m"]
+          values: ["c", "m", "r"]
         - key: karpenter.k8s.aws/instance-generation
           operator: Gt
           values: ["4"]
       nodeClassRef:
         group: karpenter.k8s.aws
         kind: EC2NodeClass
-        name: node-cpu
+        name: node-cpu-train
       expireAfter: 720h # 30 * 24h = 720h
+      taints:
+        - key: ray/train-cpu
+          value: "true"
+          effect: NoSchedule
   limits:
     cpu: 640
     # memory: 256Gi

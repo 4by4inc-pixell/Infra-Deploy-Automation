@@ -3,7 +3,13 @@ module "vpc" {
   cluster_name    = var.cluster_name
   number_of_azs = 3
   tags = var.tags
-  
+}
+
+resource "aws_vpc_endpoint" "s3" {
+  vpc_id            = module.vpc.vpc_id
+  service_name      = "com.amazonaws.us-west-2.s3"
+  route_table_ids   = module.vpc.private_route_table_ids
+  vpc_endpoint_type = "Gateway"
 }
 
 module "eks" {

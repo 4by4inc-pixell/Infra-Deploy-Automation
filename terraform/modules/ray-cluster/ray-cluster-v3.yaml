@@ -62,7 +62,7 @@ spec:
             effect: "NoSchedule"
         restartPolicy: Never # No restart to avoid reuse of pod for different ray nodes.
         nodeSelector:
-          ray/type: cpu
+          ray/type: train-cpu
   workerGroupSpecs:
   # the Pod replicas in this group typed worker
   - replicas: 0
@@ -78,18 +78,18 @@ spec:
           image: ${ray_runtime_cpu}
           resources:
             limits:
-              cpu: ${ray_cpuworker_cpu_use}
-              memory: ${ray_cpuworker_ram_use}
+              cpu: ${ray_cpuworker_cpu_limit}
+              memory: ${ray_cpuworker_ram_limit}
             requests:
-              cpu: ${ray_cpuworker_cpu_use}
-              memory: ${ray_cpuworker_ram_use}
+              cpu: ${ray_cpuworker_cpu_request}
+              memory: ${ray_cpuworker_ram_request}
         tolerations:
           - key: ray/train-cpu
             operator: "Exists"
             effect: "NoSchedule"
         restartPolicy: Never # Never restart a pod to avoid pod reuse
         nodeSelector:
-          ray/type: cpu
+          ray/type: train-cpu
   - replicas: 0
     minReplicas: ${ray_gpuworker_replica_min}
     maxReplicas: ${ray_gpuworker_replica_max}
@@ -103,12 +103,12 @@ spec:
           image: ${ray_runtime_gpu}
           resources:
             limits:
-              cpu: ${ray_gpuworker_cpu_use}
-              memory: ${ray_gpuworker_ram_use}
+              cpu: ${ray_gpuworker_cpu_limit}
+              memory: ${ray_gpuworker_ram_limit}
               nvidia.com/gpu: ${ray_gpuworker_gpu_use}
             requests:
-              cpu: ${ray_gpuworker_cpu_use}
-              memory: ${ray_gpuworker_ram_use}
+              cpu: ${ray_gpuworker_cpu_request}
+              memory: ${ray_gpuworker_ram_request}
               nvidia.com/gpu: ${ray_gpuworker_gpu_use}
         tolerations:
           - key: nvidia.com/gpu
@@ -119,4 +119,4 @@ spec:
             effect: "NoSchedule"
         restartPolicy: Never # Never restart a pod to avoid pod reuse
         nodeSelector:
-          ray/type: gpu
+          ray/type: train-gpu

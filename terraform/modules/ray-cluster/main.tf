@@ -19,5 +19,13 @@ resource "kubectl_manifest" "raycluster" {
     ray_gpuworker_gpu_use                 = var.ray_gpuworker_gpu_use
     ray_gpuworker_replica_min             = var.ray_gpuworker_replica_min
     ray_gpuworker_replica_max             = var.ray_gpuworker_replica_max
+    ray_cpuworker_cpu_limit               = var.ray_cpuworker_cpu_limit
+    ray_cpuworker_ram_limit               = var.ray_cpuworker_ram_limit
+    ray_cpuworker_cpu_request             = var.ray_cpuworker_cpu_request
+    ray_cpuworker_ram_request             = var.ray_cpuworker_ram_request
+    ray_gpuworker_cpu_limit               = var.ray_gpuworker_cpu_limit
+    ray_gpuworker_ram_limit               = var.ray_gpuworker_ram_limit
+    ray_gpuworker_cpu_request             = var.ray_gpuworker_cpu_request
+    ray_gpuworker_ram_request             = var.ray_gpuworker_ram_request
   })
 }

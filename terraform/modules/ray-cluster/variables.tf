@@ -74,3 +74,38 @@ variable "templatefile_path" {
   type = string
   default = "ray-cluster.yaml"
 }
+
+
+variable "ray_cpuworker_cpu_limit" {
+  type = string
+  default = "1" 
+}
+variable "ray_cpuworker_ram_limit" {
+  type = string
+  default = "4Gi" 
+}
+variable "ray_cpuworker_cpu_request" {
+  type = string
+  default = "1" 
+}
+variable "ray_cpuworker_ram_request" {
+  type = string
+  default = "4Gi" 
+}
+
+variable "ray_gpuworker_cpu_limit" {
+  type = string
+  default = "4" 
+}
+variable "ray_gpuworker_ram_limit" {
+  type = string
+  default = "4Gi" 
+}
+variable "ray_gpuworker_cpu_request" {
+  type = string
+  default = "4" 
+}
+variable "ray_gpuworker_ram_request" {
+  type = string
+  default = "4Gi" 
+}

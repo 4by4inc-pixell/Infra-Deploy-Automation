@@ -7,9 +7,12 @@ spec:
     metadata:
       labels:
         node-pool: node-gpu-train
-        ray/type: gpu
+        ray/type: train-gpu
     spec:
       requirements:
+        - key: topology.kubernetes.io/zone
+          operator: In
+          values: ["us-west-2a"]
         - key: kubernetes.io/arch
           operator: In
           values: ["amd64"]
@@ -27,7 +30,7 @@ spec:
           values: ["5"]
         - key: karpenter.k8s.aws/instance-size
           operator: In
-          values: ["xlarge", "2xlarge", "4xlarge"]
+          values: ["xlarge"]
       nodeClassRef:
         group: karpenter.k8s.aws
         kind: EC2NodeClass
@@ -37,6 +40,9 @@ spec:
         - key: nvidia.com/gpu
           value: "true"
           effect: NoSchedule  # GPU가 필요하지 않은 Pod는 이 노드에 스케줄링되지 않음
+        - key: ray/train-gpu
+          value: "true"
+          effect: NoSchedule
   limits:
     cpu: 2000
     # memory: 3840Gi
