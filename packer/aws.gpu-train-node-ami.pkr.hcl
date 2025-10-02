@@ -18,11 +18,11 @@ variable "aws_region" {
 }
 
 locals {
-  timestamp = regex_replace(timestamp(), "[- TZ:]", "")
+  time_stamp = regex_replace(timestamp(), "[- TZ:]", "")
 }
 
 source "amazon-ebs" "eks-gpu" {
-  ami_name      = "${var.ami_prefix}-${local.timestamp}"
+  ami_name      = "${var.ami_prefix}-${local.time_stamp}"
   instance_type = "g5.2xlarge"
   region        = "${var.aws_region}"
   source_ami_filter {

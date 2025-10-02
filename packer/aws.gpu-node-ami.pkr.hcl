@@ -55,7 +55,7 @@ build {
     inline = [  
       "sudo crictl config runtime-endpoint unix:///var/run/containerd/containerd.sock",
       "sudo systemctl restart containerd",
-	    "sudo crictl pull ghcr.io/4by4inc-pixell/pms-ray-cluster:1.0.1-trt",
+	    "sudo crictl pull ghcr.io/4by4inc-pixell/pms-ray-cluster:1.4.2-trt",
 	    "sudo crictl pull nvcr.io/nvidia/k8s-device-plugin:v0.17.0",
     ]
   }
