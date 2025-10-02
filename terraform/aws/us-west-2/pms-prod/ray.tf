@@ -10,8 +10,8 @@ module "ray-cluster" {
   ray_cluster_name = local.ray_cluster_name
   namespace = local.namespace
   ray_version = "2.40.0"
-  ray_runtime_cpu = "ghcr.io/4by4inc-pixell/pms-ray-cluster:1.0.1-basic"
-  ray_runtime_gpu = "ghcr.io/4by4inc-pixell/pms-ray-cluster:1.0.1-trt"
+  ray_runtime_cpu = "ghcr.io/4by4inc-pixell/pms-ray-cluster:1.4.2-basic"
+  ray_runtime_gpu = "ghcr.io/4by4inc-pixell/pms-ray-cluster:1.4.2-trt"
   ray_head_cpu_use = "8"
   ray_head_ram_use = "16Gi"
   ray_cpuworker_cpu_use = "1"
